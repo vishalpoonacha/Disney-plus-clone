@@ -1,8 +1,13 @@
 import styled from "styled-components"
+import ImgSlider from "./ImgSlider"
+import Viewers from "./Viewers";
 
 const Home = (props) =>{
     return(
-        <Container>Home</Container>
+        <Container>
+            <ImgSlider/>
+            <Viewers/>
+        </Container>
     )
 };
 
