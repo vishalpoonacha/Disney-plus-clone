@@ -1,5 +1,5 @@
 # Disney+ with React JS (Firebase + Styled Components + Redux)
-**[LIVE](https://disney-plus-clone-729da.web.app/)**
+Check out the App ->**[LIVE](https://disney-plus-clone-729da.web.app/)**
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
