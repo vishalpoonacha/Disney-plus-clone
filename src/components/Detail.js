@@ -1,16 +1,40 @@
 import styled from "styled-components"
+import {useEffect, useState} from "react"
+import {useParams} from "react-router-dom"
+import db from "../firebase"
 
 const Detail = (props)=>{
+
+    const {id} =useParams();
+    const [detailData, setDetailData] = useState({});
+
+    useEffect(()=>{
+        db.collection("movies")
+        .doc(id)
+        .get()
+        .then((doc) =>{
+            if(doc.exists){
+                setDetailData(doc.data());
+
+            } else{
+                console.log("no such document in firebase");
+            }
+        }).catch((error)=>{
+            console.log("Error",error)
+        });
+    },[id]);
+   
+
     return(
-        <div>
+        
             <Container>
                 <Background>
-                    <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/456A711C19899C881600F6247705E5253EB18C2471D75E5281E1FF6ACB6D2FBA/scale?width=1440&aspectRatio=1.78&format=jpeg" alt=""/>
+                    <img src={detailData.backgroundImg} alt={detailData.title}/>
                 </Background>
                 <ImageTitle>
                     <img 
-                    src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4A67A42FB16607DAE7E22266D3F00181965178ED1884047C2D982EE7D89D3554/scale?width=1440&aspectRatio=1.78"
-                     alt=""/>
+                    src={detailData.titleImg}
+                     alt={detailData.title}/>
                 </ImageTitle>
                 <ContentMeta>
                     <Controls>
@@ -36,11 +60,11 @@ const Detail = (props)=>{
                             </div>
                         </GroupWatch>
                     </Controls>
-                    <SubTiltle>SubTitle</SubTiltle>
-                    <Description>Description</Description>
+                    <SubTiltle>{detailData.subTitle}</SubTiltle>
+                    <Description>{detailData.description}</Description>
                 </ContentMeta>
                 </Container>
-        </div>
+        
     )
 }
 
@@ -213,6 +237,8 @@ const SubTiltle= styled.div`
     color:rgb(249,249,249);
     font-size:15px;
     min-height:20px;
+    padding:20px 0px;
+    margin:0px 24px;
 
 
     @media (max-width:768px){
@@ -225,10 +251,12 @@ const Description = styled.div`
     font-size:20px;
     padding:16px 0px;
     color:rgb(249,249,249);
+    margin:0px 24px;
 
 
     @media (max-width:768px){
-        
+        font-size:14px;
+
     }
 `;
 
